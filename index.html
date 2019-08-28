@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="./jquery-3.4.1.js"></script>
+  <title>Document</title>
+</head>
+<body>
+  <button id="add">add</button>
+  <div id="list">
+  </div>
+  <script>
+    let items = [
+      {
+        todo: 'do something',
+        id: 0
+      },
+      {
+        todo: 'do something else',
+        id: 1
+      }
+    ];
+
+    // the last id in the list
+    let count = 1;
+
+    // render inside the list
+    for (let item of items) {
+      $('#list').append(`<div class="item" id="item-${item.id}">
+        <input type=\"text\" /><button class="delete">delete</button>
+      </div>`);
+    }
+
+    // populate the data in the input tag
+    for (let item of items) {
+      $(`#item-${item.id} > input`).val(item.todo);
+    }
+
+    // click event handler for the list
+    $( "#list" ).click(function(event) {
+      // $(event.target).parent('.item');
+      var id = $(event.target).parent('.item').attr('id');
+      var targetType = $(event.target).attr('class');
+      if (targetType === 'delete') {
+        $(`#${id}`).remove();
+      }
+    });
+
+    $( "#add" ).click(function() {
+      // create a new item
+      const item = {
+        todo: '',
+        id: count + 1
+      }
+      // increment the count first
+      count++;
+      // add it to the items list
+      items.push(item);
+      $('#list').append(`<div class="item" id="item-${count}">
+        <input type=\"text\" /><button class="delete">delete</button>
+      </div>`);
+    });
+  </script>
+</body>
+</html>
